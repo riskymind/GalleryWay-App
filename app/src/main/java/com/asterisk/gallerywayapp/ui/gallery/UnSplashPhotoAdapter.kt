@@ -11,7 +11,7 @@ import com.asterisk.gallerywayapp.databinding.ItemUnsplashPhotoBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
-class UnSplashPhotoAdapter : PagingDataAdapter<Result, UnSplashPhotoAdapter.PhotoViewHolder>(
+class UnSplashPhotoAdapter(private val listener: OnItemClickListener) : PagingDataAdapter<Result, UnSplashPhotoAdapter.PhotoViewHolder>(
     PHOTO_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
@@ -28,8 +28,21 @@ class UnSplashPhotoAdapter : PagingDataAdapter<Result, UnSplashPhotoAdapter.Phot
         }
     }
 
-    class PhotoViewHolder(private val binding: ItemUnsplashPhotoBinding) :
+    inner class PhotoViewHolder(private val binding: ItemUnsplashPhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    if (item != null) {
+                        listener.onItemClick(item)
+                    }
+                }
+
+            }
+        }
 
             fun bind(photo: Result) {
                 binding.apply {
@@ -43,6 +56,10 @@ class UnSplashPhotoAdapter : PagingDataAdapter<Result, UnSplashPhotoAdapter.Phot
                     textViewImageName.text = photo.user.username
                 }
             }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(photo: Result)
     }
 
     companion object {
