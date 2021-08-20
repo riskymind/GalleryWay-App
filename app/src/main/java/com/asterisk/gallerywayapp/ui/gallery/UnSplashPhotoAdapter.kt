@@ -11,11 +11,14 @@ import com.asterisk.gallerywayapp.databinding.ItemUnsplashPhotoBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
-class UnSplashPhotoAdapter(private val listener: OnItemClickListener) : PagingDataAdapter<Result, UnSplashPhotoAdapter.PhotoViewHolder>(
-    PHOTO_COMPARATOR) {
+class UnSplashPhotoAdapter(private val listener: OnItemClickListener) :
+    PagingDataAdapter<Result, UnSplashPhotoAdapter.PhotoViewHolder>(
+        PHOTO_COMPARATOR
+    ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
-       val binding = ItemUnsplashPhotoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemUnsplashPhotoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         return PhotoViewHolder(binding)
     }
@@ -44,18 +47,18 @@ class UnSplashPhotoAdapter(private val listener: OnItemClickListener) : PagingDa
             }
         }
 
-            fun bind(photo: Result) {
-                binding.apply {
-                    Glide.with(itemView)
-                        .load(photo.urls.regular)
-                        .centerCrop()
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .error(R.drawable.ic_error)
-                        .into(imageView)
+        fun bind(photo: Result) {
+            binding.apply {
+                Glide.with(itemView)
+                    .load(photo.urls.regular)
+                    .centerCrop()
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .error(R.drawable.ic_error)
+                    .into(imageView)
 
-                    textViewImageName.text = photo.user.username
-                }
+                textViewImageName.text = photo.user.username
             }
+        }
     }
 
     interface OnItemClickListener {
