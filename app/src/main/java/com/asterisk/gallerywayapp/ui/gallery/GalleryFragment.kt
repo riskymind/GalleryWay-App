@@ -8,15 +8,18 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.asterisk.gallerywayapp.R
-import com.asterisk.gallerywayapp.data.model.Result
 import com.asterisk.gallerywayapp.databinding.FragmentGalleryBinding
+import com.asterisk.gallerywayapp.domain.model.Result
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class GalleryFragment : Fragment(R.layout.fragment_gallery), UnSplashPhotoAdapter.OnItemClickListener {
+class GalleryFragment : Fragment(R.layout.fragment_gallery),
+    UnSplashPhotoAdapter.OnItemClickListener {
     private val viewModel by viewModels<GalleryViewModel>()
 
     private var _binding: FragmentGalleryBinding? = null
@@ -40,8 +43,10 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery), UnSplashPhotoAdapte
             buttonRetry.setOnClickListener { adapter.retry() }
         }
 
-        viewModel.photos.observe(viewLifecycleOwner) {
-            adapter.submitData(viewLifecycleOwner.lifecycle, it)
+        lifecycleScope.launchWhenStarted {
+            viewModel.photos.collectLatest {
+                adapter.submitData(viewLifecycleOwner.lifecycle, it)
+            }
         }
 
         adapter.addLoadStateListener { loadState ->
@@ -78,7 +83,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery), UnSplashPhotoAdapte
         val searchItem = menu.findItem(R.id.action_search)
         val searchView = searchItem.actionView as SearchView
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
                     binding.recyclerView.scrollToPosition(0)
@@ -100,4 +105,5 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery), UnSplashPhotoAdapte
         super.onDestroyView()
         _binding = null
     }
+
 }

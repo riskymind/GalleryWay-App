@@ -1,6 +1,9 @@
 package com.asterisk.gallerywayapp.data.di
 
-import com.asterisk.gallerywayapp.data.api.UnSplashApi
+import com.asterisk.gallerywayapp.commons.Constants.BASE_URL
+import com.asterisk.gallerywayapp.data.remote.UnSplashApi
+import com.asterisk.gallerywayapp.data.repository.GalleryRepositoryImpl
+import com.asterisk.gallerywayapp.domain.repository.GalleryRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,7 +42,7 @@ object AppModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
-            .baseUrl(UnSplashApi.BASE_URL)
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
@@ -47,7 +50,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideUnSplashApi(retrofit: Retrofit) =
+    fun provideUnSplashApi(retrofit: Retrofit): UnSplashApi =
         retrofit.create(UnSplashApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideGalleryRepository(unSplashApi: UnSplashApi): GalleryRepository {
+        return GalleryRepositoryImpl(unSplashApi)
+    }
 
 }

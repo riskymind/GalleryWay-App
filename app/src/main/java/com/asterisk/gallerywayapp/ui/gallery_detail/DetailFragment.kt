@@ -53,7 +53,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     ): Boolean {
                         progressBar.isVisible = false
                         textViewCreator.isVisible = true
-                        textViewDesc.isVisible = photo.description != null
                         return false
                     }
                 })
@@ -61,13 +60,12 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView)
 
-            textViewDesc.text = photo.description
             val uri = Uri.parse(photo.user.attributionUrl)
             val intent = Intent(Intent.ACTION_VIEW, uri)
 
 
             textViewCreator.apply {
-                text = photo.user.name
+                text = photo.user.username
                 setOnClickListener {
                     context.startActivity(intent)
                 }

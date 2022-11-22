@@ -6,7 +6,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.asterisk.gallerywayapp.R
-import com.asterisk.gallerywayapp.data.model.Result
+import com.asterisk.gallerywayapp.domain.model.Result
 import com.asterisk.gallerywayapp.databinding.ItemUnsplashPhotoBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions

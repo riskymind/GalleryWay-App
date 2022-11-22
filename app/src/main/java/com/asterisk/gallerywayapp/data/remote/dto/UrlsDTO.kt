@@ -1,11 +1,9 @@
-package com.asterisk.gallerywayapp.data.model
+package com.asterisk.gallerywayapp.data.remote.dto
 
-import android.os.Parcelable
+import com.asterisk.gallerywayapp.domain.model.Urls
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
-data class Urls(
+data class UrlsDTO(
     @SerializedName("full")
     val full: String,
     @SerializedName("raw")
@@ -16,4 +14,14 @@ data class Urls(
     val small: String,
     @SerializedName("thumb")
     val thumb: String
-): Parcelable
+)
+
+fun UrlsDTO.toUrls(): Urls {
+    return Urls(
+        full = full,
+        raw = raw,
+        regular = regular,
+        small = small,
+        thumb = thumb
+    )
+}

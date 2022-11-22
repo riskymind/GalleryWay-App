@@ -9,6 +9,7 @@ This an Application to search the UnSplash Images api..
 - Navigation component
 - View Binding
 - Gagger Hilt (DI)
+- Flow
 
 #Code Architecture
 - MVVM
