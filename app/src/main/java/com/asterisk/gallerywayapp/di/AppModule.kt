@@ -1,4 +1,4 @@
-package com.asterisk.gallerywayapp.data.di
+package com.asterisk.gallerywayapp.di
 
 import com.asterisk.gallerywayapp.commons.Constants.BASE_URL
 import com.asterisk.gallerywayapp.data.remote.UnSplashApi

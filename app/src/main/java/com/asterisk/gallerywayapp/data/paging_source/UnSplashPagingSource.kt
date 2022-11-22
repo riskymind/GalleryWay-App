@@ -1,6 +1,7 @@
 package com.asterisk.gallerywayapp.data.paging_source
 
 import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import com.asterisk.gallerywayapp.data.remote.UnSplashApi
 import com.asterisk.gallerywayapp.data.remote.dto.toResult
 import retrofit2.HttpException
@@ -29,5 +30,9 @@ class UnSplashPagingSource(
         } catch (e: HttpException) {
             LoadResult.Error(e)
         }
+    }
+
+    override fun getRefreshKey(state: PagingState<Int, Result>): Int? {
+        TODO("Not yet implemented")
     }
 }

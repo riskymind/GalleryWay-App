@@ -18,8 +18,9 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class DetailFragment : Fragment(R.layout.fragment_detail) {
     private val args by navArgs<DetailFragmentArgs>()
 
@@ -66,10 +67,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
             textViewCreator.apply {
                 text = photo.user.username
-                setOnClickListener {
-                    context.startActivity(intent)
-                }
-
+                setOnClickListener { context.startActivity(intent) }
                 paint.isUnderlineText = true
             }
 
